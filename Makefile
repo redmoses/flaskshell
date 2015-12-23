@@ -8,7 +8,7 @@ dev-init:
 	$(root)/.env/bin/pip install flask
 
 build:
-	docker build -t flaskshell .
+	docker build -t $(img) .
 
 start:
 	docker rm $(cont); mkdir logs; \
