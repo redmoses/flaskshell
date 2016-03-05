@@ -1,0 +1,31 @@
+nginx:
+  image: nginx:latest
+  ports:
+    - "80:80"
+  volumes_from:
+    - app
+  links:
+    - app:app
+  volumes:
+    - ./config/nginx:/etc/nginx/conf.d
+
+app:
+  build: .
+  ports:
+   - "5000:5000"
+  volumes:
+   - ./src:/app/flaskshell/src
+   - ./logs:/app/flaskshell/logs
+   - ./config:/app/flaskshell/config
+  links:
+   - mysql:mysql
+
+mysql:
+  image: mysql:5.6
+  environment:
+    MYSQL_ROOT_PASSWORD: 'root'
+    MYSQL_DATABASE: 'flaskshell'
+    MYSQL_USER: 'flaskuser'
+    MYSQL_PASSWORD: 'flask123'
+  volumes:
+    - /var/lib/mysql
