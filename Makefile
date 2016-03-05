@@ -33,6 +33,9 @@ stop:
 restart:
 	docker-compose restart
 
+restart-app:
+	docker exec -ti $(cont) supervisorctl restart flaskshell
+
 shell:
 	docker exec -ti $(cont) bash
 
