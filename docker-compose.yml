@@ -13,8 +13,8 @@ nginx:
 app:
   build: .
   container_name: flaskshell
-  ports:
-   - "5000:5000"
+  expose:
+    - "5000"
   volumes:
    - ./src:/app/flaskshell/src
    - ./logs:/app/flaskshell/logs
