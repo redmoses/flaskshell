@@ -30,6 +30,9 @@ start:
 stop:
 	docker-compose stop
 
+status:
+	docker-compose ps
+
 restart:
 	docker-compose restart
 
