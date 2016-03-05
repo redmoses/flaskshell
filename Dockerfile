@@ -1,13 +1,20 @@
 FROM ubuntu:trusty
 MAINTAINER Red Moses <musa@redmoses.me>
-# install packages
-RUN sed -i 's/archive.ubuntu.com/mirror.dhakacom.com/g' /etc/apt/sources.list;
-RUN apt-get update; apt-get install -y python3-pip supervisor; \
-  pip3 install flask; mkdir -p /app/flaskshell/logs
-# copy src and config directory
+# create app user
+RUN useradd -ms /bin/bash -d /app/flaskshell mr_app
+# install system packages
+RUN apt-get update; apt-get install -y python3-pip mysql-client
+# copy requirements.pip
+COPY config/ /app/flaskshell/config
+# install python packages
+RUN pip3 install -r /app/flaskshell/config/requirements.pip
+# copy src directory
 COPY src/ /app/flaskshell/src
-COPY config/ /app/flaskshell/config/
+# create logs directory
+RUN mkdir /app/flaskshell/logs
 # expose the port
 EXPOSE 5000
-# create entrypoint
+# set workdir
+WORKDIR /app/flaskshell/src
+# set entrypoint
 ENTRYPOINT ["/usr/bin/supervisord", "-c", "/app/flaskshell/config/supervisord.conf"]
