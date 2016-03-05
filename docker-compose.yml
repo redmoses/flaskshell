@@ -24,7 +24,7 @@ app:
 
 mysql:
   image: mysql:5.6
-  container_name: flaskshell-mysql
+  container_name: flaskshell_mysql
   environment:
     MYSQL_ROOT_PASSWORD: 'root'
     MYSQL_DATABASE: 'flaskshell'
